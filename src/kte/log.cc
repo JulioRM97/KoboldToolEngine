@@ -1,0 +1,40 @@
+#include "kte/log.h"
+
+#include <iostream>
+#include <mutex>
+
+namespace kte
+{
+
+////////////////////////////////////////////////////////////////
+struct Logger::Data
+{
+  std::mutex lock;
+
+  uint32_t count = 0;
+};
+
+////////////////////////////////////////////////////////////////
+Logger::Logger()
+    : data_(new Logger::Data())
+{
+}
+
+////////////////////////////////////////////////////////////////
+Logger::~Logger() = default;
+
+////////////////////////////////////////////////////////////////
+void Logger::log(const std::string& message)
+{
+  std::lock_guard<std::mutex> guard(data_->lock);
+
+  std::cout << data_->count++ << ": " << message << std::endl;
+}
+
+////////////////////////////////////////////////////////////////
+void Logger::output()
+{
+}
+
+} // end namespace kte
+

@@ -1,0 +1,27 @@
+#include "kte/game/scene.h"
+
+#include "kte/game/game_manager.h"
+#include "kte/game/node.h"
+
+namespace kte
+{
+
+////////////////////////////////////////////////////////////////
+Scene::Scene() = default;
+
+////////////////////////////////////////////////////////////////
+Scene::Scene(const Scene& other) = default;
+
+////////////////////////////////////////////////////////////////
+Scene::~Scene() = default;
+
+////////////////////////////////////////////////////////////////
+Node& Scene::addChild()
+{
+  auto& node = node_manager_.emplace(nullptr, this, nullptr);
+  nodes_.push_back(&node);
+  return node;
+}
+
+} // end namespace kte
+
